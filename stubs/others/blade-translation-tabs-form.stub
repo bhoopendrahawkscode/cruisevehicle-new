@@ -1,0 +1,125 @@
+<div class="mb-3 translation-tabs">
+    <ul class="nav nav-tabs border-0" role="tabList">
+        @php $i = 0; @endphp
+        @foreach ($languages as $laguageRowTop)
+            <li class="nav-item">
+                <a class="nav-link language_tab {{ $laguageRowTop->locale }}
+                    @php if($i == 0){echo " active"; } @endphp"
+                    id="tabId{{ $laguageRowTop->id }}" data-bs-toggle="pill" href="#custom-tabs-{{ $laguageRowTop->id }}"
+                    role="tab" aria-selected="true">{{ $laguageRowTop->name }}
+                </a>
+            </li>
+            @php $i++; @endphp
+        @endforeach
+    </ul>
+
+    <div class="tab-content" id="tab-parent">
+        @php $j = 0; @endphp
+        @foreach ($languages as $key=> $languageRow)
+            <div language="{{ $languageRow->id }}"
+                class="tab-pane   fade @php if($j == 0){echo " active show"; } @endphp"
+                id="custom-tabs-{{ $languageRow->id }}" role="tabContent">
+                <div class="row">
+                   ${{TRANSLATIONS_FIELDS}}$
+                  
+                </div>
+              
+            </div>
+            @php $j++; @endphp
+        @endforeach
+    </div>
+</div>
+
+<div class="row">
+${{NONE_TRANSLATION_FIELDS}}$
+</div>
+
+<div class="form-group d-flex gap-3">
+    <button type="submit"
+        class="btn theme_btn bg_theme font-semibold border-0 fs-6 px-sm-5">{{ trans('messages.submit') }}</button>
+    <a href="{{route($listRoute)}}" class="btn px-sm-5 font-semibold border_btn"><em
+            class="icon-refresh"></em> {{ trans('messages.cancel') }}</a>
+</div>
+
+
+                   <script src="{{ asset('assets/js/custom-user-define-fun.js') }}"></script>
+                    
+@if (env('ENABLE_CLIENT_VALIDATION'))
+    <script>
+        window.range_ = [''];
+        const validateName = "#";
+        const model_id = "{{ isset($model) ? $model->id : null }}";
+
+        $(function() {
+         
+            window.formReference = $("#${{SMALL_MODEL_NAME}}$Form").validate({
+                rules: {
+
+                    name: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 30,
+                        notNumber: true,
+                       
+                    }
+
+
+                },
+                messages: {
+                    name: {
+                        minlength: "{{ trans('messages.min2Max30') }}",
+                        maxlength: "{{ trans('messages.min2Max30') }}",
+                    
+                    },
+                },
+                errorClass: "help-inline",
+                errorElement: "span",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).parents('.form-group').addClass('error');
+
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).parents('.form-group').removeClass('error');
+                    $(element).parents('.form-group').addClass('success');
+                },
+
+
+            });
+
+
+
+            checkImage(false);
+            $("#imageInput").change(function(e) {
+                checkImage(true);
+            });
+
+
+        });
+    </script>
+
+    @if (isset($model))
+        <script>
+            $(function() {
+    
+                $("#imageInput").rules('add', {
+                    extension: "{{ Config::get('constants.validImageExtensions') }}",
+                    filesize: "{{ Config::get('constants.maxImageSizeJs') }}",
+                });
+            });
+        </script>
+    @else
+        <script>
+            $(function() {
+    
+                $("#imageInput").rules('add', {
+                    // required: true,
+                    extension: "{{ Config::get('constants.validImageExtensions') }}",
+                    filesize: "{{ Config::get('constants.maxImageSizeJs') }}",
+                });
+    
+            });
+        </script>
+    @endif
+
+@endif
+

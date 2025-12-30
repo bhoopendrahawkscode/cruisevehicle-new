@@ -1,0 +1,66 @@
+# =========================
+# Laravel / PHP
+# =========================
+/vendor/
+.env
+.env.*
+!.env.example
+.phpunit.result.cache
+/.phpunit.cache
+/storage
+/storage/*
+!/storage/app/.gitkeep
+!/storage/framework/.gitkeep
+!/storage/logs/.gitkeep
+/storage/logs
+
+# =========================
+# Node / Frontend
+# =========================
+/node_modules/
+/public/build/
+/public/hot/
+npm-debug.log*
+yarn-error.log*
+
+# =========================
+# Public uploads & backups
+# =========================
+/public/uploads/
+/public/storage/
+/public/dropdowns/
+/dbBackup/
+/comments/
+*.zip
+*.tar
+*.gz
+
+# =========================
+# Environment & secrets
+# =========================
+.env.backup
+.env.production
+.env.domain1.com
+auth.json
+fcm.json
+
+# =========================
+# IDE / OS files
+# =========================
+/.idea/
+/.vscode/
+/.fleet/
+.DS_Store
+Thumbs.db
+
+# =========================
+# Homestead / Vagrant
+# =========================
+Homestead.json
+Homestead.yaml
+
+# =========================
+# Misc
+# =========================
+*.log
+phpmyadmin

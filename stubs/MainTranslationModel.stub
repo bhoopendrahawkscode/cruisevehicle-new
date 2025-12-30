@@ -1,0 +1,49 @@
+<?php
+namespace App\Models;
+use App\Models\BaseModel;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Services\MultiLangActivityService;
+use App\Models\$TRANSLATION_MODEL_NAME$;
+class $CLASS_NAME$ extends BaseModel   
+{
+	use SoftDeletes;
+
+
+	protected $table = '$TABLE_NAME$';
+    protected $translationsAttributes = $TRANSLATION_ATTRIBUTES$;
+
+
+   public function $MODEL_NAME_IN_SMALL$_translations()
+    {
+        return $this->hasMany($TRANSLATION_MODEL_NAME$::class,'$FOREIGN_KEY_NAME$');
+    }
+    public function $MODEL_NAME_IN_SMALL$_translation()
+    {
+        return $this->hasOne($TRANSLATION_MODEL_NAME$::class,'$FOREIGN_KEY_NAME$');
+        
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($model) {
+        
+            MultiLangActivityService::DeleteActivity(model:$model,hasManyTranslations:$model->$MODEL_NAME_IN_SMALL$_translations(),hasOneTranslation:$model->$MODEL_NAME_IN_SMALL$_translation());
+            $model->$MODEL_NAME_IN_SMALL$_translations()->delete();
+        });
+        static::updating(function ($model) {
+            MultiLangActivityService::CreateStatusLog(model: $model);
+        });
+          static::updated(function ($model) {
+            MultiLangActivityService::UpdateLogActivity(model:$model,hasManyTranslations:$model->$MODEL_NAME_IN_SMALL$_translations());
+        });
+
+        static::creating(function ($model) {
+            MultiLangActivityService::CreateLogActivity(model:$model);
+        });
+        
+    }
+
+
+}

@@ -1,0 +1,42 @@
+<?php
+namespace App\Models;
+use App\Models\BaseModel;
+use Illuminate\Support\Facades\Config;
+use App\Constants\Constant;
+use App\Services\ImageService;
+class ${{MODEL_NAME}}$ extends BaseModel   
+{
+    protected $fillable =[ ${{PROPERTIES}}$ ];
+    public function getThumbImageAttribute()
+    {
+        if ($this->image != NULL
+        ) {
+            $image = ImageService::getImageUrl(Config::get('constants.IMAGE_FOLDER') . 'thumb_' . $this->image);
+        } else {
+
+            $image = url(Constant::NO_IMAGE);
+        }
+        return $image;
+    }
+    
+    public function ${{SMALL_MODEL_NAME}}$_translations()
+    {
+        return $this->hasMany(${{TRANSLATION_MODEL_NAME}}$::class, '${{SMALL_MODEL_NAME}}$_id');
+    }
+    public function ${{SMALL_MODEL_NAME}}$_translation()
+    {
+        return $this->hasOne(${{TRANSLATION_MODEL_NAME}}$::class, '${{SMALL_MODEL_NAME}}$_id');
+    }
+
+    
+    public function updateManyTranslations(array $translations,object $meta)
+    {
+
+        foreach ($translations as $translation) {
+            $translationId = $translation['id'];
+            unset($translation['id']);
+            $this->${{SMALL_MODEL_NAME}}$_translations()->where('id', $translationId)->update($translation);
+        }
+    }
+
+}

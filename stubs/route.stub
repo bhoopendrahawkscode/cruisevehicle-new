@@ -1,0 +1,13 @@
+<?php
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\${{CONTROLLER_NAME}}$;
+
+Route::controller(${{CONTROLLER_NAME}}$::class)->prefix('${{MODEL_NAME}}$')->group(function(){
+    Route::get('/','list')->name('admin.${{MODEL_NAME}}$.list');
+    Route::post('save','save')->name('admin.${{MODEL_NAME}}$.save');
+    Route::get('add','add')->name('admin.${{MODEL_NAME}}$.add');
+    Route::get('edit/{${{MODEL_NAME}}$}','edit')->name('admin.${{MODEL_NAME}}$.edit');
+    Route::post('update/{${{MODEL_NAME}}$}','update')->name('admin.${{MODEL_NAME}}$.update');
+    Route::get('delete/{${{MODEL_NAME}}$}','delete')->name('admin.${{MODEL_NAME}}$.delete');
+});
+

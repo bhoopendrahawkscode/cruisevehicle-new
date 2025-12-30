@@ -1,0 +1,12 @@
+     <div class="col-md-6">
+        <div class="form-group">
+            <label for="${{FIELD_NAME}}$">{{ trans('messages.${{FIELD_NAME}}$') }} <span class="red_lab">
+                    *</span></label>
+            {{ html()->text('${{FIELD_NAME}}$', null)->attributes(['class' => 'form-control', 'placeholder' => trans('messages.${{FIELD_NAME}}$')]) }}
+            @if ($errors->has('${{FIELD_NAME}}$'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('${{FIELD_NAME}}$') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>

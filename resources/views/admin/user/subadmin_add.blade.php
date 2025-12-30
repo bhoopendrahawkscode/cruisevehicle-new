@@ -1,0 +1,325 @@
+@extends('admin.layouts.default_layout')
+@section('content')
+<?php  use \App\Constants\Constant; ?>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<div class="header d-flex align-items-center">
+    <h1 class="page-header">
+        {{ trans('messages.add') }} {{ trans('messages.subAdmin') }}
+    </h1>
+    <ol class="breadcrumb ms-auto mb-0">
+        <li><a href="{{ Route('admin.dashboard') }}"><em class="fa fa-dashboard"></em> {{ trans('messages.dashboard') }}</a></li>
+        <li><a href="{{route('admin.listSubadmin')}}">{{ trans('messages.subAdmin') }} {{ trans("messages.list") }}</a></li>
+        <li class="active">{{ trans("messages.add") }}</li>
+    </ol>
+</div>
+<div id="page-inner">
+    <div class="panel panel-default">
+        <div class="panel-body">
+           {{ html()->modelForm(null, 'POST')->route('admin.saveSubadmin')
+            ->attributes(['id'=>'subAdminForm','class'=>'form-horizontal','role'=>'form','autocomplete' => 'off'])->open() }}
+           <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="full_name">{{trans('messages.fullName')}} <span class="red_lab"> *</span></label>
+                        {{ html()->text('full_name',null)->attributes(['class' => 'form-control',
+                        'placeholder' => trans("messages.fullName")]) }}
+                        @if ($errors->has('full_name'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('full_name') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group clearValidation">
+                        <label for="email">{{trans('messages.email')}} <span class="red_lab"> *</span></label>
+                        {{ html()->text('email',null)->attributes(['class' => 'form-control',
+                         'placeholder' => trans("messages.email")]) }}
+                        @if ($errors->has('email'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                {{--<div class="col-md-6">
+                    <div class="form-group">
+                        <label for="first_name">{{trans('messages.firstName')}} <span class="red_lab"> *</span></label>
+                        {{ html()->text('first_name',null)->attributes(['class' => 'form-control',
+                         'placeholder' => trans("messages.firstName")]) }}
+                        @if ($errors->has('first_name'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('first_name') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="last_name">{{trans('messages.lastName')}}<span class="red_lab"> *</span></label>
+                        {{ html()->text('last_name',null)->attributes(['class' => 'form-control',
+                        'placeholder' => trans("messages.lastName")]) }}                        @if ($errors->has('last_name'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('last_name') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>--}}
+            </div>
+            <div class="row">
+
+
+
+                <input type="hidden" name="role" value='3'>
+{{--
+                <div class="col-md-6">
+                    <div class="form-group clearValidation3">
+                        <label for="role">{{ trans('messages.role') }}
+                            <span class="red_lab">*</span></label>
+                        <div class="row gx-2 gx-md-3">
+
+
+                                {{ html()->select('role',$sub_admin_roles, '')->attributes([
+                                        'class' => 'form-control select2',
+                                        'placeholder' => trans('messages.role'),
+                                        'required' => 'required',
+                                    ]) }}
+
+
+                        </div>
+                        @if ($errors->has('role'))
+                            <span class="invalid-feedback " role="alert">
+                                <strong>{{ $errors->first('role') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div> --}}
+
+
+
+
+            </div>
+            @if(Constant::ALLOW_SUB_ADMIN_PASSWORD_CREATE)
+            @php
+            $isPasswordVisible = false;
+            $isConfirmPasswordVisible = false;
+            @endphp
+            <div class="row" <?php if($password_generation==Constant::SYSTEM_FACTOR) { ?> style="display:none" <?php } ?>>
+                <div class="col-sm-6">
+                    <div class="form-group clearValidation">
+                        <label for="password">{{ trans('messages.password') }}<span class="red_lab"> *</span></label>
+                        <input class="form-control" id="password" placeholder="{{trans('messages.enterPassword')}}" reqired="required" name="password" type="password" value="{{ old('password')}}">
+                        @if ($errors->has('password'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                        @endif
+                        <em class="fa fa-eye form-control-feedback cp eye-icon-fa" id="togglePassword"></em>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group clearValidation">
+                        <label for="confirm_password">{{ trans('messages.confirmPassword') }}<span class="red_lab"> *</span></label>
+                        <input class="form-control" id="confirm_password" placeholder="{{trans('messages.enterConfirmPassword')}}" reqired="required" name="confirm_password" type="password" value="{{ old('confirm_password')}}">
+                        @if ($errors->has('confirm_password'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('confirm_password') }} </strong>
+                        </span>
+                        @endif
+                        <em class="fa fa-eye form-control-feedback cp eye-icon-fa" id="togglePassword2"></em>
+                    </div>
+                </div>
+            </div>
+            @endif
+            <br />
+
+            {{--<div class="row">
+                @if(Constant::ALLOW_SUB_ADMIN_PHONE_NO)
+                <div class="col-md-6">
+                    <div class="form-group clearValidation3">
+                        <label for="phone">{{ trans('messages.phoneNo') }}
+                            <span class="red_lab">*</span></label>
+                        <div class="row gx-2 gx-md-3">
+                            <div class="col-sm-6 mb-4 mb-sm-0 errorPlacement2">
+                                {{ html()->select('country_code',$phonecode,'')->attributes(['class' => 'form-control select2',
+                                'placeholder' => trans("messages.phoneNo"),'required'=>'required']) }}
+                            </div>
+                            <div class="col-sm-6">
+                                {{ html()->text('mobile_no',null)->attributes(['class' => 'form-control',
+                                'placeholder' => trans("messages.phoneNo")]) }}
+                            </div>
+                        </div>
+                        @if ($errors->has('mobile_no'))
+                        <span class="invalid-feedback " role="alert">
+                            <strong>{{ $errors->first('mobile_no') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                </div>
+                @endif
+                <div class="col-md-6">
+                    <div class="form-group clearValidation3">
+                        <label for="phone">{{ 'Timezone' }} <span class="red_lab">
+                                *</span></label>
+                        <div class="row">
+                            <div class="col-sm-6 mb-4 mb-sm-0 errorPlacement2">
+                                {{ html()->select('timezone', $timeZone, '')->attributes([
+                                        'class' => 'form-control select2',
+                                        'placeholder' => 'timezone',
+                                        'required' => 'required',
+                                    ]) }}
+                                <span class="invalid-feedback " role="alert">
+                                    <strong>{{ $errors->first('timezone') }}</strong>
+                                </span>
+                            </div>
+                        </div>
+                        @if ($errors->has('timezone'))
+                            <span class="invalid-feedback " role="alert">
+                                <strong>{{ $errors->first('timezone') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>--}}
+
+
+            <div class="form-group d-flex gap-3">
+                <button type="submit" class="btn theme_btn bg_theme font-semibold border-0 fs-6 px-sm-5">{{ trans('messages.submit') }}</button>
+                <a href="{{route('admin.listSubadmin')}}" class="btn px-sm-5 font-semibold border_btn"><em class="icon-refresh"></em> {{ trans("messages.cancel") }}</a>
+            </div>
+            {{ html()->closeModelForm() }}
+        </div>
+    </div>
+</div>
+@if(env('ENABLE_CLIENT_VALIDATION'))
+<script integrity="" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+      $(document).ready(function() {
+            $('.select2').select2();
+        });
+    $(function() {
+        // Form Validation
+        $("#subAdminForm").validate({
+            rules: {
+                country_code:{
+                    required: true,
+                },
+                timezone: {
+                        required: true,
+                    },
+                full_name: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 60,
+                    notNumber: true,
+                    validName: true,
+                },
+
+                email: {
+                    required: true,
+                    email: true,
+                    maxlength: 100,
+                    emailPattern: true
+                },
+                mobile_no: {
+                    required: true,
+                    number: true,
+                    minlength: 6,
+                    maxlength: 12,
+                    onlyInteger: true,
+                    nonZeroPhoneNumber: true
+                },
+                password: {
+                    required: true,
+                    rule_password: true,
+                    maxlength: 30
+                },
+                confirm_password: {
+                    required: true,
+                    rule_password: true,
+                    maxlength: 30,
+                    equalTo: "#password",
+                },
+                'permissions[]': {
+                    required: true,
+                }
+            },
+            messages: {
+                full_name: {
+                    minlength: "{{ trans('messages.min2Max60') }}",
+                    maxlength: "{{ trans('messages.min2Max60') }}",
+                    notNumber: "{{ trans('messages.notNumberMessage') }}"
+                },
+                first_name: {
+                    minlength: "{{ trans('messages.min2Max30') }}",
+                    maxlength: "{{ trans('messages.min2Max30') }}",
+                    notNumber: "{{ trans('messages.notNumberMessage') }}"
+                },
+                last_name: {
+                    minlength: "{{ trans('messages.min2Max30') }}",
+                    maxlength: "{{ trans('messages.min2Max30') }}",
+                    notNumber: "{{ trans('messages.notNumberMessage') }}"
+                },
+                mobile_no: {
+                    minlength: "{{ trans('messages.phoneNumRangeValidationMessage') }}",
+                    maxlength: "{{ trans('messages.phoneNumRangeValidationMessage') }}"
+                },
+                'confirm_password': {
+                    equalTo: "{{ trans('messages.newPassConfirmPassNotMatched') }}",
+                },
+                'permissions[]': "{{ trans('messages.permissionRequired') }}",
+            },
+            errorClass: "help-inline",
+            errorElement: "span",
+            highlight: function(element, errorClass, validClass) {
+                $(element).parents('.form-group').addClass('error');
+
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).parents('.form-group').removeClass('error');
+                $(element).parents('.form-group').addClass('success');
+            },
+
+
+        });
+    });
+</script>
+@endif
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var isPasswordVisible = false;
+        var isConfirmPasswordVisible = false;
+
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            var passwordInput = document.getElementById("password");
+            isPasswordVisible = !isPasswordVisible; // Toggle the visibility state
+            if (isPasswordVisible) {
+                passwordInput.setAttribute("type", "text");
+                document.getElementById("togglePassword").classList.remove("fa-eye");
+                document.getElementById("togglePassword").classList.add("fa-eye-slash");
+            } else {
+                passwordInput.setAttribute("type", "password");
+                document.getElementById("togglePassword").classList.remove("fa-eye-slash");
+                document.getElementById("togglePassword").classList.add("fa-eye");
+            }
+        });
+
+        document.getElementById("togglePassword2").addEventListener("click", function() {
+            var confirm_passwordInput = document.getElementById("confirm_password");
+            isConfirmPasswordVisible = !isConfirmPasswordVisible; // Toggle the visibility state
+            if (isConfirmPasswordVisible) {
+                confirm_passwordInput.setAttribute("type", "text");
+                document.getElementById("togglePassword2").classList.remove("fa-eye");
+                document.getElementById("togglePassword2").classList.add("fa-eye-slash");
+            } else {
+                confirm_passwordInput.setAttribute("type", "password");
+                document.getElementById("togglePassword2").classList.remove("fa-eye-slash");
+                document.getElementById("togglePassword2").classList.add("fa-eye");
+            }
+        });
+    });
+</script>
+
+@stop

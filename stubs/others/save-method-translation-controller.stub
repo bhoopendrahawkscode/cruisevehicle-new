@@ -1,0 +1,13 @@
+${{USE_VARIABLE_NAME}}$_translations =[];
+     foreach ($request[${{FIRST_TRANSLATION_COLUMN_NAME}}$] as $key => $value) {
+   ${{USE_VARIABLE_NAME}}$_translations[] = [
+                        'language_id' => $key,
+                        ${{TRANSLATION_COLUMNS}}$
+                    ];
+
+     }
+
+      ${{USE_VARIABLE_NAME}}$->${{SMALL_MODEL_NAME}}$_translations()->createMany(${{USE_VARIABLE_NAME}}$_translations);
+
+
+      

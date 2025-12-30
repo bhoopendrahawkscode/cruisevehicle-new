@@ -1,0 +1,23 @@
+ <div class="col-6 col-sm-6">
+                        <div
+                            class="clearValidation form-group
+                            {{ $errors->has('${{TRANSLATION_FIELD_NAME}}$['. $languageRow->id .']') ? 'has-error' : '' }}">
+                            <label for="{{ trans('messages.${{TRANSLATION_FIELD_NAME}}$') }}_{{ $languageRow->id }}">
+                                 @lang('messages.${{TRANSLATION_FIELD_NAME}}$') {{ '('. $languageRow->name .')' }}
+                            </label>
+
+                            {{ html()->text('${{TRANSLATION_FIELD_NAME}}$[' . $languageRow->id . ']')->attributes([
+                                    'class' => 'form-control languages_title formValidate',
+                                    'placeholder' => trans('messages.${{TRANSLATION_FIELD_NAME}}$'),
+                                    'id' => trans('messages. ${{TRANSLATION_FIELD_NAME}}$') . '_' . $languageRow->id,
+                                ]) }}
+
+                            @if ($errors->has('${{TRANSLATION_FIELD_NAME}}$.' . $languageRow->id))
+                                <span class="invalid-feedback " role="alert">
+                                    <strong>{{ $errors->first('${{TRANSLATION_FIELD_NAME}}$.' . $languageRow->id) }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+ 

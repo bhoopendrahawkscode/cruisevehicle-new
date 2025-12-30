@@ -1,0 +1,21 @@
+ public function edit(${{MODEL}}$ $${{SMALL_MODEL_NAME}}$)
+    {
+        $model = $${{SMALL_MODEL_NAME}}$;
+
+         $data = $${{SMALL_MODEL_NAME}}$->where('id',$${{SMALL_MODEL_NAME}}$->id)->with('${{SMALL_MODEL_NAME}}$_translations')->first();
+        $${{SMALL_MODEL_NAME}}$_dataReArrange['recordId'] = $data->id;
+        if (!empty($data['${{SMALL_MODEL_NAME}}$_translations'])) {
+            foreach ($data['${{SMALL_MODEL_NAME}}$_translations'] as $translationRow) {
+                foreach ($translationRow->getAttributes() as $property => $propertyValue) {
+                    $${{SMALL_MODEL_NAME}}$_dataReArrange[$property][$translationRow->language_id]      =  $propertyValue;
+                }
+            }
+        }
+          foreach($${{SMALL_MODEL_NAME}}$->getAttributes() as $property=>$propertyValue){
+            $test_dataReArrange[$property]     =  $propertyValue;
+        }
+        
+        $data= $${{SMALL_MODEL_NAME}}$_dataReArrange;
+        return view('admin.${{SMALL_MODEL_NAME}}$.edit',compact('model','data'));
+
+    }

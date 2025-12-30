@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CruisE - Smart Vehicle Management</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      background-color: #005f73;
+      padding: 15px 0;
+    }
+
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo img {
+      height: 60px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      padding: 8px 12px;
+      transition: background 0.3s;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Hero */
+    .hero {
+      background: url('https://source.unsplash.com/1600x700/?cruise,sea') no-repeat center center/cover;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background-color: #ee9b00;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #ffb703;
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 60px 20px;
+    }
+
+    .feature-item {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .feature-item h3 {
+      color: #005f73;
+      margin-bottom: 10px;
+    }
+
+    /* About */
+    .about {
+      padding: 60px 20px;
+      background-color: #ffffff;
+    }
+
+    .about h2 {
+      text-align: center;
+      color: #005f73;
+      margin-bottom: 30px;
+    }
+
+    .about p {
+      max-width: 900px;
+      margin: auto;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: white;
+      padding: 40px 0;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+    }
+
+    .footer-col {
+      flex: 1 1 200px;
+    }
+
+    footer h4 {
+      margin-bottom: 10px;
+    }
+
+    footer a {
+      color: #ccc;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        text-align: right;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <img src="https://cruise-mu.com/public//storage/uploads/logo/863e9d06-b3f8-45ba-bdce-36eec792b58e.png" alt="CruisE Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to CruisE</h1>
+      <p>Smart Vehicle Management by Ecosystems Ltd.</p>
+      <a href="#" class="btn">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features container" id="features">
+    <div class="feature-item">
+      <h3>Track Fuel Efficiency</h3>
+      <p>Monitor and compare mileage to optimize fuel usage.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Cost Management</h3>
+      <p>Gain insight into all your vehicle expenses easily.</p>
+    </div>
+    <div class="feature-item">
+      <h3>Insurance Made Easy</h3>
+      <p>Request & compare quotes to get the best coverage.</p>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+    <h2>About CruisE</h2>
+    <p><strong>CruisE</strong> is a smart vehicle management application developed by <strong>Ecosystems Ltd.</strong>, designed to simplify the ownership experience for vehicle users. Our platform offers a comprehensive suite of features to help individuals and businesses efficiently monitor and manage the cost of running their vehicles.</p>
+    <p>With CruisE, users can track and compare fuel efficiency, gain insights into operational expenses, and make informed decisions to optimize vehicle usage. The app also provides automated reminders for important deadlines such as road tax, insurance renewals, and fitness certificate updates, helping users stay compliant and stress-free.</p>
+    <p>Additionally, CruisE enables users to request and compare insurance quotes, ensuring they get the best coverage at competitive rates—all from within the app.</p>
+    <p>Backed by <strong>Ecosystems Ltd.</strong>, CruisE is built to empower smarter, more cost-effective vehicle ownership through innovation, convenience, and reliability.</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-container">
+      <div class="footer-col">
+        <h4>About</h4>
+        <p>CruisE helps simplify smart vehicle management. Powered by Ecosystems Ltd.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

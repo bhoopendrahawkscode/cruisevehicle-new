@@ -1,0 +1,5 @@
+ public function edit(${{MODEL}}$ $${{SMALL_MODEL_NAME}}$)
+    {
+        $model = $${{SMALL_MODEL_NAME}}$;
+        return view('admin.${{SMALL_MODEL_NAME}}$.edit',compact('model'));
+    }

@@ -1,0 +1,10 @@
+${{USE_VARIABLE_NAME}}$_data =[];
+    foreach ($request[${{FIRST_TRANSLATION_COLUMN_NAME}}$] as $key => $value) {
+    ${{USE_VARIABLE_NAME}}$_data[] = [
+                        'language_id' => $key,
+                        ${{TRANSLATION_COLUMNS}}$
+                    ];
+
+     }
+
+      ${{USE_VARIABLE_NAME}}$->${{SMALL_MODEL_NAME}}$_translations()->updateManyTranslations(${{USE_VARIABLE_NAME}}$_data,${{USE_VARIABLE_NAME}}$);

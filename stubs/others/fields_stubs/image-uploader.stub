@@ -1,0 +1,27 @@
+   <div class="col-lg-4 col-md-6 upload_img mb-5">
+        <label>{{ trans('messages.image') }}
+            @if (!isset($model))
+            @endif
+        </label>
+        <input name="image" type="file" id="imageInput" accept="image/*">
+        <span id="file-size-error" class="text-danger"></span>
+        @if ($errors->has('image'))
+            <span class="invalid-feedback error" role="alert">
+                <strong>{{ $errors->first('image') }}</strong>
+            </span>
+        @endif
+        <span class="imageHint" style="display: block"></span>
+        <?php if (isset($model)) { ?>
+        <label class="exist_image">{{ trans('messages.existingImage') }}
+        </label>
+        <div class="old_img">
+            <img alt="Image" class="border border-1" src="{{ $model->thumbImage }}" width="100">
+        </div>
+        <?php } ?>
+    </div>
+    <div class="col-lg-2  col-md-6">
+        <label class='image-preview'>{{ trans('messages.imagePreview') }}</label>
+        <img id="image-preview" class="image-preview" alt="{{ trans('messages.imagePreview') }}"
+            class="img-fluid rounded-circle" width="150px">
+    </div>
+</div>

@@ -1,0 +1,198 @@
+<div class="row">
+    {{-- <div class="col-md-6 ">
+        <div class="form-group">
+            <label for="name">{{ trans('messages.name') }} <span class="red_lab">
+                    *</span></label>
+            {{ html()->text('name', null)->attributes(['class' => 'form-control', 'placeholder' => trans('messages.name'), 'enctype' => 'multipart/form-data'])->open() }}
+            @if ($errors->has('name'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div> --}}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="capacity">{{ trans('messages.capacity') }} <span class="red_lab">
+                    *</span></label>
+            {{ html()->text('capacity', null)->attributes(['class' => 'form-control', 'placeholder' => trans('messages.capacity'), 'enctype' => 'multipart/form-data'])->open() }}
+            @if ($errors->has('capacity'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('capacity') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="brand_id">{{ trans('messages.brand_name_of_vehicle') }} <span class="red_lab">
+                    *</span></label>
+
+            <div class="errorPlacement2">
+                {{ html()->select('brand_id', $brands, $model ?? '')->attributes([
+                        'class' => 'form-control select2',
+                        'placeholder' => trans('message.brand'),
+                        'required' => 'required',
+                        'id' => 'brand_id',
+                    ]) }}
+            </div>
+
+            @if ($errors->has('brand_id'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('brand_id') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="model_id">{{ trans('messages.vehicle_model') }} <span class="red_lab">
+                    *</span></label>
+
+            <div class="errorPlacement2">
+                {{ html()->select('model_id', $models, $model ?? '')->attributes([
+                        'class' => 'form-control select2',
+                        'required' => 'required',
+                        'id' => 'model_id',
+                    ]) }}
+            </div>
+
+            @if ($errors->has('model_id'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('model_id') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 upload_img mb-5 d-none">
+        <label>{{ trans('messages.image') }}
+            @if (!isset($model))
+            @endif
+        </label>
+        <input name="image" type="file" id="imageInput" accept="image/*">
+        <span id="file-size-error" class="text-danger"></span>
+        @if ($errors->has('image'))
+            <span class="invalid-feedback error" role="alert">
+                <strong>{{ $errors->first('image') }}</strong>
+            </span>
+        @endif
+        <span class="imageHint" style="display: block"></span>
+        <?php if (isset($model)) { ?>
+        <label class="exist_image">{{ trans('messages.existingImage') }}
+        </label>
+        <div class="old_img">
+            <img alt="Image" class="border border-1" src="{{ $model->thumbImage }}" width="100">
+        </div>
+        <?php } ?>
+    </div>
+    <div class="col-lg-2  col-md-6">
+        <label class='image-preview'>{{ trans('messages.imagePreview') }}</label>
+        <img id="image-preview" class="image-preview" alt="{{ trans('messages.imagePreview') }}"
+            class="img-fluid rounded-circle" width="150px">
+    </div>
+</div>
+
+<div class="form-group d-flex gap-3">
+    <button type="submit"
+        class="btn theme_btn bg_theme font-semibold border-0 fs-6 px-sm-5">{{ trans('messages.submit') }}</button>
+    <a href="{{ route($listRoute) }}" class="btn px-sm-5 font-semibold border_btn"><em class="icon-refresh"></em>
+        {{ trans('messages.cancel') }}</a>
+</div>
+
+<script src="{{ asset('assets/js/custom-user-define-fun.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#brand_id').change(function() {
+            var brand_id = $(this).val();
+            if (brand_id) {
+                $.ajax({
+                    url: '{{ route("get.models", ":brand_id") }}'.replace(':brand_id', brand_id),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#model_id').empty();
+                        $.each(data, function(key, value) {
+                            $('#model_id').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                        $('#model_id').trigger('change');
+                    }
+                });
+            } else {
+                $('#model_id').empty();
+            }
+        });
+
+        // Trigger change event if a brand is already selected
+        if ($('#brand_id').val()) {
+            $('#brand_id').trigger('change');
+        }
+
+        $('.select2').select2();
+
+        $('#renewal_period,#due_renewal_date,#service_date').datepicker({
+            format: "yyyy-mm-dd",
+            clearBtn: true,
+            autoclose:true,
+            todayHighlight: true,
+        })
+
+
+        $('#expiry_date').datepicker({
+            format: "yyyy-mm-dd",
+            clearBtn: true,
+            autoclose:true,
+            todayHighlight: true,
+            startDate: new Date()
+        })
+        OnlyAllowFloatNumber('#cost,#sum_assured_value')
+
+    })
+</script>
+@if (env('ENABLE_CLIENT_VALIDATION'))
+    <script>
+        window.range_ = [''];
+        const validateName = "#";
+        const model_id = "{{ isset($model) ? $model->id : null }}";
+
+        $(function() {
+
+            window.formReference = $("#enginecapacityForm").validate({
+                rules: {
+
+                    capacity: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 30,
+                        notNumber: true,
+                    }
+                },
+                messages: {
+                  
+                    capacity: {
+                        minlength: "{{ trans('messages.min2Max10') }}",
+                        maxlength: "{{ trans('messages.min2Max10') }}",
+
+                    },
+                },
+                errorClass: "help-inline",
+                errorElement: "span",
+                highlight: function(element, errorClass, validClass) {
+                    $(element).parents('.form-group').addClass('error');
+
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).parents('.form-group').removeClass('error');
+                    $(element).parents('.form-group').addClass('success');
+                },
+
+
+            });
+
+
+        });
+    </script>
+
+@endif
