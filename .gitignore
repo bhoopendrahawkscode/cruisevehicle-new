@@ -36,3 +36,5 @@ Homestead.yaml
 # =========================
 *.log
 phpmyadmin
+/public/fcm.json
+
