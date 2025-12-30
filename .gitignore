@@ -21,9 +21,7 @@ yarn-error.log*
 # =========================
 # Public uploads & backups
 # =========================
-/public/uploads/
-/public/storage/
-/public/dropdowns/
+
 /dbBackup/
 /comments/
 *.zip
