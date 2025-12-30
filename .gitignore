@@ -12,38 +12,17 @@
 # =========================
 # Node / Frontend
 # =========================
-/node_modules/
-/public/build/
-/public/hot/
-npm-debug.log*
-yarn-error.log*
+
 
 # =========================
 # Public uploads & backups
 # =========================
 
-/dbBackup/
-/comments/
-*.zip
-*.tar
-*.gz
-
-# =========================
-# Environment & secrets
-# =========================
-.env.backup
-.env.production
-.env.domain1.com
-auth.json
-fcm.json
 
 # =========================
 # IDE / OS files
 # =========================
-/.idea/
-/.vscode/
-/.fleet/
-.DS_Store
+
 Thumbs.db
 
 # =========================
