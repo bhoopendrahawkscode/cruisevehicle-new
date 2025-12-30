@@ -7,12 +7,7 @@
 !.env.example
 .phpunit.result.cache
 /.phpunit.cache
-/storage
-/storage/*
-!/storage/app/.gitkeep
-!/storage/framework/.gitkeep
-!/storage/logs/.gitkeep
-/storage/logs
+
 
 # =========================
 # Node / Frontend
